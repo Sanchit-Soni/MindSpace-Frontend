@@ -6,15 +6,16 @@ import Login from "./components/Login";
 import { useStateValue } from "./StateProvider";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
+import Analysis from "./components/Analysis";
 
 function App() {
   const Routing = () => {
     return (
       <Switch>
         <Route path="/" exact component={Home} />
-
         <Route path="/Home" exact component={Home} />
         <Route path="/Profile" exact component={Profile} />
+        <Route path="/Analysis" exact component={Analysis} />
       </Switch>
     );
   };
@@ -27,7 +28,6 @@ function App() {
         <div className="main">
           <Router>
             <NewNav />
-
             <Routing />
           </Router>
         </div>

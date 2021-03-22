@@ -6,7 +6,6 @@ const Home = () => {
       <h1>Welcome </h1>
       <h1>card1</h1>
       <h1>card1</h1>
-
       <h1>card1</h1>
       <h1>card1</h1>
     </div>

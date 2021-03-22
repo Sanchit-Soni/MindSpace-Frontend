@@ -38,14 +38,15 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Mind Space
           </Typography>
-          <Link to="/Home">
+          <Link to="/Home" className="links">
             <Button color="inherit">HOME</Button>
           </Link>
-          <Link to="/Profile">
+          <Link to="/Profile" className="links">
             <Button color="inherit">Profile</Button>
           </Link>
-
-          <Button color="inherit">Analysis</Button>
+          <Link to="/Analysis" className="links">
+            <Button color="inherit">Analysis</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
