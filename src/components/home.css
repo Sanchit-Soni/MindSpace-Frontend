@@ -27,6 +27,27 @@
   border-radius: 10px;
 }
 
+.up-image-container {
+  margin-top: 30px;
+}
+.image-upload {
+  width: 50rem;
+  border-radius: 20px;
+}
+.upload-div {
+  padding: 10px;
+}
+.btn-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 50px;
+}
+/* .left-btn {
+  margin-left: 15px;
+} */
+
 @media screen and (max-width: 580px) {
   .card-container {
     margin-top: 20px;
@@ -42,5 +63,8 @@
     padding: 20px;
     width: 300px;
     border-radius: 20px;
+  }
+  .image-upload {
+    width: 20rem;
   }
 }
