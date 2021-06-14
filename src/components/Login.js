@@ -25,7 +25,7 @@ function Login() {
         <div className="login__text">
           <img
             className="image"
-            src="https://image.freepik.com/free-vector/group-therapy-illustration_23-2148662912.jpg"
+            src="https://image.freepik.com/free-vector/tiny-people-beautiful-flower-garden-inside-female-head-isolated-flat-illustration_74855-11098.jpg"
           ></img>
           <h1>Sign in to </h1>
           <h1>Mind Space</h1>

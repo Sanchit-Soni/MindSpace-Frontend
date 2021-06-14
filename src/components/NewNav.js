@@ -4,49 +4,65 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+
 import { Link } from "react-router-dom";
-import Home from "./Home";
+import NewDropDown from "./NewDropDown";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginBottom: "70px",
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(3),
   },
   title: {
     flexGrow: 1,
   },
+  color: {
+    color: "white",
+    textDecoration: "none",
+  },
+  height: {
+    maxHeight: "100px",
+  },
 }));
 
-export default function ButtonAppBar() {
+export default function NewNav() {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed" className={classes.height}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Mind Space
+            <Link to="/" className={classes.color}>
+              MindSpace
+            </Link>
           </Typography>
-          <Link to="/Home" className="links">
-            <Button color="inherit">HOME</Button>
-          </Link>
-          <Link to="/Profile" className="links">
-            <Button color="inherit">Profile</Button>
-          </Link>
-          <Link to="/Analysis" className="links">
-            <Button color="inherit">Analysis</Button>
-          </Link>
+          {isMobile ? (
+            <>
+              <Link to="/" className={classes.color}>
+                <Button className={classes.color}>Home</Button>
+              </Link>
+
+              <Link to="/Profile" className={classes.color}>
+                <Button className={classes.color}>Profile</Button>
+              </Link>
+
+              <Link to="/Analysis" className={classes.color}>
+                <Button className={classes.color}>Analytics</Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <NewDropDown />
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>

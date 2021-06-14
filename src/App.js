@@ -7,7 +7,11 @@ import { useStateValue } from "./StateProvider";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Analysis from "./components/Analysis";
-
+import Facesnap from "./components/screens/Facesnap";
+import Writeyourmood from "./components/screens/Writeyourmood";
+import Cognitive from "./components/screens/Cognitive";
+import { Container } from "react-bootstrap";
+import Footer from "./components/Footer";
 function App() {
   const Routing = () => {
     return (
@@ -16,6 +20,9 @@ function App() {
         <Route path="/Home" exact component={Home} />
         <Route path="/Profile" exact component={Profile} />
         <Route path="/Analysis" exact component={Analysis} />
+        <Route path="/Writeyourmood" exact component={Writeyourmood} />
+        <Route path="/CognitiveCorrections" exact component={Cognitive} />
+        <Route path="/Facesnap" exact component={Facesnap} />
       </Switch>
     );
   };
@@ -30,6 +37,8 @@ function App() {
             <NewNav />
             <Routing />
           </Router>
+
+          {/* <Footer /> */}
         </div>
       )}
     </div>
