@@ -5,6 +5,7 @@ const Facesnap = () => {
   const [sentImage, setSentImage] = useState({});
   const [previewImage, setPreviewImage] = useState(null);
   const [switcher, setSwitcher] = useState(true);
+  const [show, setShow] = useState(true);
   const [showUpload, setShowUpload] = useState(true);
 
   const showImage = (file) => {
@@ -48,6 +49,7 @@ const Facesnap = () => {
     setPreviewImage([]);
     setSwitcher(true);
     setShowUpload(true);
+    setShow(true);
   };
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -56,6 +58,7 @@ const Facesnap = () => {
     setImage(file);
     console.log(file);
     setSwitcher(false);
+    setShow(false);
   };
 
   return (
@@ -94,14 +97,9 @@ const Facesnap = () => {
 
           {/* Only show first image, for now. */}
           <div className="up-image-container">
-            {previewImage ? (
+            {show && <h1>Please Upload your image</h1>}
+            {previewImage && (
               <img src={previewImage} className="image-upload" />
-            ) : (
-              // <img
-              //   src="https://image.freepik.com/free-vector/woman-taking-selfie-photo-smartphone_116089-19.jpg"
-              //   className="image-prev"
-              // />
-              <h1>Please Upload your image</h1>
             )}
           </div>
           <center>
