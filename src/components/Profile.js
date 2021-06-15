@@ -22,8 +22,8 @@ const Profile = ({ history }) => {
     auth.signOut();
     localStorage.removeItem("user-state");
     localStorage.removeItem("user-details");
-    window.location.reload(false);
     history.push("/");
+    window.location.reload(false);
   };
 
   return (
