@@ -35,7 +35,7 @@ const Writeyourmood = () => {
         <center>
           <div class="form-group">
             <textarea
-              placeholder="Write Your mood here"
+              placeholder="Write Your mood here..."
               onChange={handleChange}
               className="text-box"
               id="exampleFormControlTextarea1"

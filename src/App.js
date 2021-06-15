@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import NewNav from "./components/NewNav";
@@ -10,9 +10,33 @@ import Analysis from "./components/Analysis";
 import Facesnap from "./components/screens/Facesnap";
 import Writeyourmood from "./components/screens/Writeyourmood";
 import Cognitive from "./components/screens/Cognitive";
+import firebase from "firebase/app";
 import { Container } from "react-bootstrap";
 import Footer from "./components/Footer";
 function App() {
+  const [isAuth, setIsAuth] = useState();
+  const auth = firebase.auth();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsAuth(true);
+      } else {
+        setIsAuth(false);
+      }
+    });
+  }, [isAuth, auth]);
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // store the user on local storage
+      localStorage.setItem("user", true);
+    } else {
+      // removes the user from local storage on logOut
+      localStorage.removeItem("user");
+    }
+  });
+
   const Routing = () => {
     return (
       <Switch>
@@ -27,6 +51,8 @@ function App() {
     );
   };
   const [{ user }, dispatch] = useStateValue();
+
+  // const {user} = useContext()
   return (
     <div className="App">
       {!user ? (

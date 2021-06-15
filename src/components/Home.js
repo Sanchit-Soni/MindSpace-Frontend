@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import { withFirebase } from "../Firebase/index";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -38,7 +39,7 @@ const Home = () => {
                   alt="Contemplative Reptile"
                   height="300"
                   image="https://image.freepik.com/free-vector/hands-character-writing-letter-desk-with-papers-pencil-envelopes-coffee-cup_74855-10720.jpg"
-                  title="Contemplative Reptile"
+                  title="Write your mood"
                 />
                 <CardContent>
                   <Typography
@@ -72,7 +73,7 @@ const Home = () => {
                   alt="Contemplative Reptile"
                   height="300"
                   image="https://image.freepik.com/free-vector/business-idea-generation-plan-development-pensive-man-with-lightbulb-cartoon-character-technical-mindset-entrepreneurial-mind-brainstorming-process_335657-2104.jpg"
-                  title="Contemplative Reptile"
+                  title="Cognitive Corrections"
                 />
                 <CardContent>
                   <Typography
@@ -106,7 +107,7 @@ const Home = () => {
                   alt="Contemplative Reptile"
                   height="300"
                   image="https://image.freepik.com/free-vector/human-hand-holding-mobile-phone_74855-6532.jpg"
-                  title="Contemplative Reptile"
+                  title="Face Snap"
                 />
                 <CardContent>
                   <Typography
@@ -137,4 +138,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withFirebase(Home);

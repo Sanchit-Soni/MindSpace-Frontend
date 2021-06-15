@@ -6,7 +6,7 @@ import PieChart from "./Charts/PieChart";
 const Analysis = () => {
   return (
     <div className="container">
-      <h1>Analysis</h1>
+      <h1>Analytics</h1>
       <div className="charts">
         <div className="chart-1">
           <BarChart />
