@@ -112,6 +112,7 @@ const Facesnap = () => {
                   color="primary"
                   onClick={handlePost}
                   className="form-btn"
+                  disabled={switcher}
                 >
                   Read My Face
                 </Button>

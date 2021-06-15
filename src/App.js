@@ -15,31 +15,34 @@ import { Container } from "react-bootstrap";
 import Footer from "./components/Footer";
 function App() {
   const [isAuth, setIsAuth] = useState();
+  const [check, setCheck] = useState(false);
+  const [logged, setLogged] = useState(false);
+  const [logger, setLogger] = useState(false);
   const auth = firebase.auth();
-
+  const [{ user }, dispatch] = useStateValue();
+  // useEffect(() => {
+  //   setLogged(localStorage.getItem("user-details"));
+  //   if (logged) {
+  //     console.log("logged in");
+  //   }
+  // }, [logged]);
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsAuth(true);
-      } else {
-        setIsAuth(false);
-      }
-    });
-  }, [isAuth, auth]);
-
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // store the user on local storage
-      localStorage.setItem("user", true);
-    } else {
-      // removes the user from local storage on logOut
-      localStorage.removeItem("user");
+    let ch = localStorage.getItem("user-state");
+    setCheck(ch);
+    if (check !== null) {
+      setLogged(true);
     }
-  });
+    if (user) {
+      setLogger(true);
+    }
+    console.log(check);
+    console.log(logged);
+  }, [logged, check, logger, user]);
 
   const Routing = () => {
     return (
       <Switch>
+        <Route path="/" exact component={Home} />
         <Route path="/" exact component={Home} />
         <Route path="/Home" exact component={Home} />
         <Route path="/Profile" exact component={Profile} />
@@ -50,12 +53,11 @@ function App() {
       </Switch>
     );
   };
-  const [{ user }, dispatch] = useStateValue();
 
   // const {user} = useContext()
   return (
     <div className="App">
-      {!user ? (
+      {!logger && !check ? (
         <Login />
       ) : (
         <div className="main">
