@@ -10,6 +10,8 @@ import Analysis from "./components/Analysis";
 import Facesnap from "./components/screens/Facesnap";
 import Writeyourmood from "./components/screens/Writeyourmood";
 import Cognitive from "./components/screens/Cognitive";
+import SignUpPage from "./SignUp";
+import SignInPage from "./SignIn";
 import firebase from "firebase/app";
 import { Container } from "react-bootstrap";
 import Footer from "./components/Footer";
@@ -56,7 +58,11 @@ function App() {
   return (
     <div className="App">
       {!user ? (
-        <Login />
+        // <Login />
+        <>
+          <Route path="/signUp" component={SignUpPage} />
+          <Route path="/signIn" component={SignInPage} />
+        </>
       ) : (
         <div className="main">
           <Router>
