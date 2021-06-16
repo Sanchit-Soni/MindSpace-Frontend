@@ -1,4 +1,5 @@
 import React from "react";
+import Table from "./Charts/Table";
 import BarChart from "./Charts/BarChart";
 import Circular from "./Charts/Circular";
 import LineChart from "./Charts/LineChart";
@@ -7,7 +8,10 @@ const Analysis = () => {
   return (
     <div className="container">
       <h1>Analytics</h1>
-      <div className="charts">
+      <div>
+        <Table />
+      </div>
+      {/* <div className="charts">
         <div className="chart-1">
           <BarChart />
         </div>
@@ -22,7 +26,7 @@ const Analysis = () => {
         <div className="chart-3">
           <Circular />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

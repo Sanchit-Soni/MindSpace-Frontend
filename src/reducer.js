@@ -8,6 +8,9 @@ export const actionTypes = {
 
 const reducer = (state, action) => {
   console.log(action);
+  localStorage.setItem("user-state", true);
+  // localStorage.setItem("user-details", action);
+  localStorage.setItem("user-details", JSON.stringify(action));
   switch (action.type) {
     case actionTypes.SET_USER:
       return {
