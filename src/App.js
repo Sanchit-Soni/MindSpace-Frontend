@@ -13,6 +13,7 @@ import Cognitive from "./components/screens/Cognitive";
 import firebase from "firebase/app";
 import { Container } from "react-bootstrap";
 import Footer from "./components/Footer";
+import Graphs from "./components/screens/Graphs";
 function App() {
   const [isAuth, setIsAuth] = useState();
   const [check, setCheck] = useState(false);
@@ -50,6 +51,7 @@ function App() {
         <Route path="/Writeyourmood" exact component={Writeyourmood} />
         <Route path="/CognitiveCorrections" exact component={Cognitive} />
         <Route path="/Facesnap" exact component={Facesnap} />
+        <Route path="/Graphs" exact component={Graphs} />
       </Switch>
     );
   };

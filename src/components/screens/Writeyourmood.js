@@ -3,7 +3,7 @@ import Moment from "react-moment";
 import "../home.css";
 
 const Writeyourmood = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState();
   var [date, setDate] = useState(new Date());
 
   useEffect(() => {
@@ -14,7 +14,8 @@ const Writeyourmood = () => {
   }, []);
 
   const handleChange = (e) => {
-    setText(e.target.value);
+    let text = e.target.value;
+    setText({ text });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
