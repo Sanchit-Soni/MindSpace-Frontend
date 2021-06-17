@@ -18,7 +18,7 @@ const Graphs = ({ setSwitcher }) => {
       <BarChart />
       <br></br>
       <br></br>
-      <Circular />
+      {/* <Circular /> */}
       <br></br>
     </div>
   );

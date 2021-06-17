@@ -9,7 +9,7 @@ const BarChart = () => {
           datasets: [
             {
               label: "Mood",
-              data: [12, 19, 3, 4, 5, 6],
+              data: [0.5, 0.3, 0.13, 0.94, 0.5, 0.6],
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",

@@ -16,14 +16,17 @@ const Analysis = () => {
       let newVal = JSON.parse(values);
       setProfile(newVal.user);
     }
+
     const uid = `${profile.uid}`;
     console.log(uid);
     let des = GetDataById(uid);
+    let ses = Getdata(uid);
+    console.log(ses);
     console.log(des);
     setWymData(des);
     console.log(wymData);
     console.log(des);
-  }, [wymData]);
+  }, [wymData, profile.uid]);
 
   return (
     <div className="container">
