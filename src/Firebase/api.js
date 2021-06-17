@@ -15,10 +15,10 @@ const Post=(key,mood,date)=>{
     })
 }
 
-const Getdata=(value)=>{
-    database.orderByChild('id').equalTo(value).once('value').then((snapshot)=>{
-        console.log(snapshot.val());
-    })
+const Getdata=async (value)=>{
+    const data=database.orderByChild('id').equalTo(value).once('value');
+    console.log(data);
+    return data.val()
 }
 
 export default Post;

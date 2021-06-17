@@ -16,10 +16,9 @@ const Postdata=(key,category,sentiment,values,date,sentences)=>{
 
 }
 
-const Getdata=(value)=>{
-    database.orderByChild('id').equalTo(value).once('value').then((snapshot)=>{
-        console.log(snapshot.val())
-    })
+const Getdata=async (value)=>{
+   const data=await database.orderByChild('id').equalTo(value).once('value');
+   return data.val()
 }
 
 export  {Getdata};
