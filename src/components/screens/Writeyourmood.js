@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Moment from "react-moment";
+import { Postdata } from "../../Firebase/writemood";
 import "../home.css";
 
 const Writeyourmood = () => {
@@ -19,6 +20,10 @@ const Writeyourmood = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    let sentiments=['angry','emotional'];
+    let values=[50,40]
+    let date=new Date();
+    Postdata('sanchit',sentiments,values,date.toISOString())
     console.log(text);
   };
   return (

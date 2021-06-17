@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InputField from "./InputComponents/InputField";
 import { Button } from "@material-ui/core";
+import Postdata, { Getdata } from "../../Firebase/cognigitiveapi";
 
 const Cognitive = () => {
   const initialValues = {
@@ -23,7 +24,14 @@ const Cognitive = () => {
   };
 
   const handleSubmit = (e) => {
+    // let category=['section1','section2'];
+    // let sentences=[values.mood1,values.mood2,values.mood3,values.mood4,values.mood5]
+    // let valu=[80,20,10]
+    // let date=new Date();
+    //  Postdata('lucky',category,'positive',valu,date.toISOString(),sentences);
+    Getdata('lucky');
     e.preventDefault();
+
     console.log(values);
   };
   const handleReset = (e) => {

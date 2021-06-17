@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
+import Post, { Getdata } from "../../Firebase/api";
 const Facesnap = () => {
   const [image, setImage] = useState([]);
   const [sentImage, setSentImage] = useState({});
@@ -38,6 +39,14 @@ const Facesnap = () => {
       console.log(idCardBase64);
       setImage(idCardBase64);
       setSentImage(idCardBase64);
+      console.log(localStorage.getItem('user-details'))
+      let mood={
+        angry:0.03,
+        fear:0.12,
+        happy:50.25
+      }
+      Post('sanchit',mood,0.2)
+      //Getdata('id','lucky'); //pass your data in place of lucky and key in place of id
       console.log(sentImage);
     });
     setShowUpload(false);
