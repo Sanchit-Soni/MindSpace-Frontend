@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
@@ -10,6 +10,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Graphs from "../screens/Graphs";
+import Moment from "react-moment";
+import { Postdata, GetDataById } from "../../Firebase/writemood";
 
 function createData(SrNo, id, Name, Entry, Date) {
   const density = id / SrNo;
@@ -46,7 +48,7 @@ const useStyles = makeStyles({
   },
   container: {
     maxHeight: 540,
-    width: 800,
+    width: 900,
   },
 });
 
@@ -54,7 +56,41 @@ export default function StickyHeadTable() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [switcher, setSwitcher] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(3);
+  const [wymData, setWymData] = useState();
+  const [face, setFace] = useState();
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState({});
+  const [row1, setRow1] = useState();
+  const [value1, setValue1] = useState([]);
+
+  useEffect(() => {
+    if (localStorage.getItem("user-details") !== null) {
+      let values = localStorage.getItem("user-details");
+      let newVal = JSON.parse(values);
+      setProfile(newVal.user);
+    }
+
+    const uid = `${profile.uid}`;
+
+    (async () => {
+      const datas = await GetDataById(uid);
+      if (datas) {
+        setWymData(datas);
+      }
+      console.log(datas);
+      setRow1(datas);
+      setLoading(false);
+    })();
+    (async () => {
+      const data2 = await GetDataById(uid);
+      if (data2) {
+        setFace(data2);
+      }
+      console.log(data2);
+      setLoading(false);
+    })();
+  }, [loading]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -64,16 +100,18 @@ export default function StickyHeadTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = (value1) => {
+    setValue1(value1);
     setSwitcher(true);
   };
 
   return switcher === false ? (
-    <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          {/* <TableHead>
+    <>
+      <Paper className={classes.root}>
+        <TableContainer className={classes.container}>
+          <h1>Write Your Mood Statistics</h1>
+          <Table stickyHeader aria-label="sticky table">
+            {/* <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
@@ -86,77 +124,159 @@ export default function StickyHeadTable() {
               ))}
             </TableRow>
           </TableHead> */}
-          <TableHead>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Report ID</TableCell>
+                <TableCell align="center">Date&nbsp;</TableCell>
+                <TableCell align="center">Report&nbsp;</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {wymData &&
+                wymData
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map(
+                    (row) => (
+                      <TableRow key={row.id}>
+                        {/* <TableCell component="th" scope="row">
+                        {row.SrNo}
+                      </TableCell> */}
+                        <TableCell align="center">
+                          {profile.displayName}
+                        </TableCell>
+
+                        <TableCell align="center">{row.key}</TableCell>
+
+                        <TableCell align="center">
+                          <Moment format="DD MMMM YYYY" withTitle>
+                            {row.date}
+                          </Moment>{" "}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            component="span"
+                            onClick={() => handleClick(row.values)}
+                          >
+                            Reports
+                          </Button>
+                        </TableCell>
+
+                        {/* <TableCell align="right">{row.protein}</TableCell> */}
+                      </TableRow>
+                    )
+
+                    // return (
+                    //   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    //     {columns.map((column) => {
+                    //       const value = row[column.id];
+                    //       return (
+                    //         <>
+                    //           <TableCell key={column.id} align={column.align}>
+                    //             {column.format && typeof value === "number"
+                    //               ? column.format(value)
+                    //               : value}
+                    //           </TableCell>
+                    //         </>
+                    //       );
+                    //     })}
+                    //   </TableRow>
+                    // );
+                  )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[3, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+
+      <Paper className={classes.root}>
+        <TableContainer className={classes.container}>
+          <h1>FaceSnap Statistics</h1>
+          <Table stickyHeader aria-label="sticky table">
+            {/* <TableHead>
             <TableRow>
-              <TableCell>SrNo</TableCell>
-              <TableCell align="center">Uid</TableCell>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Entries&nbsp;</TableCell>
-              <TableCell align="center">Dates&nbsp;</TableCell>
-              <TableCell align="center">Reports&nbsp;</TableCell>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(
-                (row) => (
-                  <TableRow key={row.SrNo}>
-                    <TableCell component="th" scope="row">
-                      {row.SrNo}
-                    </TableCell>
-                    <TableCell align="center">{row.id}</TableCell>
-                    <TableCell align="center">{row.Name}</TableCell>
-                    <TableCell align="center">{row.Entry}</TableCell>
-                    <TableCell align="center">{row.Date}</TableCell>
-                    <TableCell align="center">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        component="span"
-                        onClick={handleClick}
-                      >
-                        Reports
-                      </Button>
-                    </TableCell>
+          </TableHead> */}
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Report ID</TableCell>
+                <TableCell align="center">Date&nbsp;</TableCell>
+                <TableCell align="center">Report&nbsp;</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {face &&
+                face
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <TableRow key={row.id}>
+                      {/* <TableCell component="th" scope="row">
+                        {row.SrNo}
+                      </TableCell> */}
+                      <TableCell align="center">
+                        {profile.displayName}
+                      </TableCell>
 
-                    {/* <TableCell align="right">{row.protein}</TableCell> */}
-                  </TableRow>
-                )
+                      <TableCell align="center">{row.key}</TableCell>
 
-                // return (
-                //   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                //     {columns.map((column) => {
-                //       const value = row[column.id];
-                //       return (
-                //         <>
-                //           <TableCell key={column.id} align={column.align}>
-                //             {column.format && typeof value === "number"
-                //               ? column.format(value)
-                //               : value}
-                //           </TableCell>
-                //         </>
-                //       );
-                //     })}
-                //   </TableRow>
-                // );
-              )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </Paper>
+                      <TableCell align="center">
+                        <Moment format="DD MMMM YYYY" withTitle>
+                          {row.date}
+                        </Moment>{" "}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          component="span"
+                          onClick={() => handleClick(row.values)}
+                        >
+                          Reports
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[3, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </>
   ) : (
     <>
-      <Graphs setSwitcher={setSwitcher} />
+      <Graphs
+        setSwitcher={setSwitcher}
+        sentiments={wymData.sentiments}
+        values={value1}
+      />
     </>
   );
 }

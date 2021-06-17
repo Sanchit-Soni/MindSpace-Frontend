@@ -11,6 +11,7 @@ const Analysis = () => {
   const [wymData, setWymData] = useState();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({});
+  const [face, setFace] = useState({});
   // useEffect(async () => {
   //   if (localStorage.getItem("user-details") !== null) {
   //     let values = localStorage.getItem("user-details");
@@ -45,6 +46,14 @@ const Analysis = () => {
       console.log(datas);
       setLoading(false);
     })();
+    (async () => {
+      const data2 = await GetDataById(uid);
+      if (data2) {
+        setFace(data2);
+      }
+      console.log(data2);
+      setLoading(false);
+    })();
     // console.log(uid);
     // let des = GetDataById(uid);
     // let ses = Getdata(uid);
@@ -56,7 +65,8 @@ const Analysis = () => {
 
   useEffect(() => {
     console.log(wymData);
-  }, [wymData]);
+    console.log(face);
+  }, [wymData, face]);
 
   return loading === true ? (
     <h1>Loading</h1>
@@ -66,14 +76,7 @@ const Analysis = () => {
       <div>
         <Table />
       </div>
-      <div>
-        {wymData !== null && <h1>Data exist</h1>}
-        {/* {wymData.map((des) => (
-          <>
-            <p>{des.id}</p>
-          </>
-        ))} */}
-      </div>
+
       {/* <div className="charts">
         <div className="chart-1">
           <BarChart />

@@ -2,7 +2,7 @@ import React from "react";
 import Circular from "../Charts/Circular";
 import BarChart from "../Charts/BarChart";
 import Button from "@material-ui/core/Button";
-const Graphs = ({ setSwitcher }) => {
+const Graphs = ({ setSwitcher, values }) => {
   const handleChange = () => {
     setSwitcher(false);
   };
@@ -15,7 +15,7 @@ const Graphs = ({ setSwitcher }) => {
         </Button>
       </center>
 
-      <BarChart />
+      <BarChart values={values} />
       <br></br>
       <br></br>
       {/* <Circular /> */}
