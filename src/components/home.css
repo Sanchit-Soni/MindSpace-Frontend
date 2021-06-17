@@ -74,6 +74,12 @@
   border-radius: 10px;
 }
 
+.cog-image {
+  height: 250px;
+  width: 250px;
+  border-radius: 30px;
+}
+
 @media screen and (max-width: 580px) {
   .card-container {
     margin-top: 20px;

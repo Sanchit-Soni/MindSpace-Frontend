@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import Post, { Getdata } from "../../Firebase/api";
 const Facesnap = () => {
@@ -8,6 +8,15 @@ const Facesnap = () => {
   const [switcher, setSwitcher] = useState(true);
   const [show, setShow] = useState(true);
   const [showUpload, setShowUpload] = useState(true);
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    if (localStorage.getItem("user-details") !== null) {
+      let values = localStorage.getItem("user-details");
+      let newVal = JSON.parse(values);
+      setProfile(newVal.user);
+    }
+  }, []);
 
   const showImage = (file) => {
     const reader = new FileReader();
@@ -39,13 +48,13 @@ const Facesnap = () => {
       console.log(idCardBase64);
       setImage(idCardBase64);
       setSentImage(idCardBase64);
-      console.log(localStorage.getItem('user-details'))
-      let mood={
-        angry:0.03,
-        fear:0.12,
-        happy:50.25
-      }
-      Post('sanchit',mood,0.2)
+      console.log(localStorage.getItem("user-details"));
+      let mood = {
+        angry: 0.03,
+        fear: 0.12,
+        happy: 50.25,
+      };
+      Post(`${profile.uid}`, mood, 0.2);
       //Getdata('id','lucky'); //pass your data in place of lucky and key in place of id
       console.log(sentImage);
     });

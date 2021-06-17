@@ -5,9 +5,16 @@ import "../home.css";
 
 const Writeyourmood = () => {
   const [text, setText] = useState();
+  const [profile, setProfile] = useState({});
   var [date, setDate] = useState(new Date());
 
   useEffect(() => {
+    if (localStorage.getItem("user-details") !== null) {
+      let values = localStorage.getItem("user-details");
+      let newVal = JSON.parse(values);
+      setProfile(newVal.user);
+    }
+
     var timer = setInterval(() => setDate(new Date()), 1000);
     return function cleanup() {
       clearInterval(timer);
@@ -20,10 +27,10 @@ const Writeyourmood = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    let sentiments=['angry','emotional'];
-    let values=[50,40]
-    let date=new Date();
-    Postdata('sanchit',sentiments,values,date.toISOString())
+    let sentiments = ["angry", "emotional"];
+    let values = [50, 40];
+    let date = new Date();
+    Postdata(`${profile.uid}`, sentiments, values, date.toISOString());
     console.log(text);
   };
   return (

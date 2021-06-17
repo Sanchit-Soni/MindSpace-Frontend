@@ -29,7 +29,7 @@ const Cognitive = () => {
     // let valu=[80,20,10]
     // let date=new Date();
     //  Postdata('lucky',category,'positive',valu,date.toISOString(),sentences);
-    Getdata('lucky');
+    Getdata("lucky");
     e.preventDefault();
 
     console.log(values);
@@ -49,12 +49,21 @@ const Cognitive = () => {
   return (
     <div className="container back-img">
       <h1>Cognitive Corrections</h1>
+      <center>
+        <div>
+          <img
+            className="cog-image"
+            alt=" "
+            src="https://image.freepik.com/free-vector/employee-working-office-interior-workplace-thinking-about-success_1150-37491.jpg"
+          />
+        </div>
+      </center>
       {/* <InputField /> */}
       <form>
         <div className="input-bars">
           <input
             className="ip-bar"
-            placeholder="Enter Text"
+            placeholder="Enter Your Thought"
             value={values.mood1}
             onChange={handleInputChange}
             name="mood1"
@@ -62,14 +71,14 @@ const Cognitive = () => {
           />
           <input
             className="ip-bar"
-            placeholder="Enter Text"
+            placeholder="Enter Your Thought"
             value={values.mood2}
             onChange={handleInputChange}
             name="mood2"
             label="Mood2"
           />
           <input
-            placeholder="Enter Text"
+            placeholder="Enter Your Thought"
             className="ip-bar"
             value={values.mood3}
             onChange={handleInputChange}
@@ -77,7 +86,7 @@ const Cognitive = () => {
             label="Mood3"
           />
           <input
-            placeholder="Enter Text"
+            placeholder="Enter Your Thought"
             className="ip-bar"
             value={values.mood4}
             onChange={handleInputChange}
@@ -85,7 +94,7 @@ const Cognitive = () => {
             label="Mood4"
           />
           <input
-            placeholder="Enter Text"
+            placeholder="Enter Your Thought"
             className="ip-bar"
             value={values.mood5}
             onChange={handleInputChange}
