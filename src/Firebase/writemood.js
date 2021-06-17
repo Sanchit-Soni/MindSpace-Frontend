@@ -15,17 +15,12 @@ const Postdata = (key, sentiments, values, date) => {
     .catch((err) => console.log(err));
 };
 
-const GetDataById = (id) => {
-  database
+const GetDataById = async (id) => {
+  const data=await database
     .orderByChild("id")
     .equalTo(id)
-    .once("value")
-    .then((snapshot) => {
-      console.log(snapshot.val());
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    .once("value");
+    return data.val()
 };
 
 export default database;
