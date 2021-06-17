@@ -41,6 +41,7 @@ const Facesnap = () => {
   };
 
   const handlePost = (e) => {
+    const newDate = new Date();
     e.preventDefault();
     let idCardBase64 = "";
     getBase64(image, (result) => {
@@ -54,7 +55,7 @@ const Facesnap = () => {
         fear: 0.12,
         happy: 50.25,
       };
-      Post(`${profile.uid}`, mood, 0.2);
+      Post(`${profile.uid}`, mood, newDate);
       //Getdata('id','lucky'); //pass your data in place of lucky and key in place of id
       console.log(sentImage);
     });

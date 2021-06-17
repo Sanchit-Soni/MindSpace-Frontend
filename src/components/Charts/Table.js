@@ -10,7 +10,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Graphs from "../screens/Graphs";
-import Graph2 from "../screens/Graphs";
+import Graph2 from "../screens/Graph2";
 import Moment from "react-moment";
 import { GetDataById } from "../../Firebase/writemood";
 import { Getdata } from "../../Firebase/api";
@@ -65,6 +65,7 @@ export default function StickyHeadTable() {
   const [profile, setProfile] = useState({});
   const [row1, setRow1] = useState();
   const [value1, setValue1] = useState([]);
+  const [value2, setValue2] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("user-details") !== null) {
@@ -98,9 +99,9 @@ export default function StickyHeadTable() {
     setValue1(value1);
     setSwitcher("bar");
   };
-  const handleClick2 = (value1) => {
-    // setValue1(value1);
+  const handleClick2 = (value2) => {
     setSwitcher("circle");
+    setValue2(value2);
   };
   useEffect(() => {
     if (localStorage.getItem("user-details") !== null) {
@@ -119,8 +120,12 @@ export default function StickyHeadTable() {
       setLoading(false);
     })();
     console.log(face);
-  }, [wymData]);
-  return switcher === "table" && wymData && face ? (
+    console.log(switcher);
+  }, [wymData, switcher]);
+
+  return loading === true ? (
+    <h1>Loading</h1>
+  ) : switcher === "table" ? (
     <>
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>

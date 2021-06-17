@@ -4,7 +4,7 @@ import BarChart from "../Charts/BarChart";
 import Button from "@material-ui/core/Button";
 const Graph2 = ({ setSwitcher, values }) => {
   const handleChange = () => {
-    setSwitcher(false);
+    setSwitcher("table");
   };
 
   return (
@@ -15,9 +15,9 @@ const Graph2 = ({ setSwitcher, values }) => {
         </Button>
       </center>
 
+      <br></br>
+      <br></br>
       <Circular />
-      <br></br>
-      <br></br>
       {/* <Circular /> */}
       <br></br>
     </div>
