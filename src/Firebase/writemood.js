@@ -20,7 +20,14 @@ const GetDataById = async (id) => {
     .orderByChild("id")
     .equalTo(id)
     .once("value");
-    return data.val()
+    var datas=[];
+    data.forEach((item)=>{
+      datas.push({
+          key:item.key,
+          ...item.val()
+      })
+  })
+  return datas;
 };
 
 export default database;

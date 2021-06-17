@@ -18,8 +18,16 @@ const Postdata=(key,category,sentiment,values,date,sentences)=>{
 
 const Getdata=async (value)=>{
    const data=await database.orderByChild('id').equalTo(value).once('value');
-   return data.val()
+   var datas=[];
+   data.forEach((item)=>{
+    datas.push({
+        key:item.key,
+        ...item.val()
+    })
+})
+return datas;
 }
+
 
 export  {Getdata};
 export default Postdata;

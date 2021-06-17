@@ -16,9 +16,17 @@ const Post=(key,mood,date)=>{
 }
 
 const Getdata=async (value)=>{
-    const data=database.orderByChild('id').equalTo(value).once('value');
+    const data=await database.orderByChild('id').equalTo(value).once('value');
+    var datas=[];
     console.log(data);
-    return data.val()
+    data.forEach((childSnapshot)=>{
+        console.log(childSnapshot.val());
+        datas.push({
+            key:childSnapshot.key,
+            ...childSnapshot.val()
+        })
+    })
+    return datas;
 }
 
 export default Post;
