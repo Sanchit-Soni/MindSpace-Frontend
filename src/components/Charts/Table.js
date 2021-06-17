@@ -10,8 +10,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Graphs from "../screens/Graphs";
+import Graph2 from "../screens/Graphs";
 import Moment from "react-moment";
-import { Postdata, GetDataById } from "../../Firebase/writemood";
+import { GetDataById } from "../../Firebase/writemood";
+import { Getdata } from "../../Firebase/api";
 
 function createData(SrNo, id, Name, Entry, Date) {
   const density = id / SrNo;
@@ -55,7 +57,7 @@ const useStyles = makeStyles({
 export default function StickyHeadTable() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [switcher, setSwitcher] = useState(false);
+  const [switcher, setSwitcher] = useState("table");
   const [rowsPerPage, setRowsPerPage] = React.useState(3);
   const [wymData, setWymData] = useState();
   const [face, setFace] = useState();
@@ -79,18 +81,10 @@ export default function StickyHeadTable() {
         setWymData(datas);
       }
       console.log(datas);
-      setRow1(datas);
+      // setRow1(datas);
       setLoading(false);
     })();
-    (async () => {
-      const data2 = await GetDataById(uid);
-      if (data2) {
-        setFace(data2);
-      }
-      console.log(data2);
-      setLoading(false);
-    })();
-  }, [loading]);
+  }, [loading, profile.uid]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -102,28 +96,36 @@ export default function StickyHeadTable() {
   };
   const handleClick = (value1) => {
     setValue1(value1);
-    setSwitcher(true);
+    setSwitcher("bar");
   };
-
-  return switcher === false ? (
+  const handleClick2 = (value1) => {
+    // setValue1(value1);
+    setSwitcher("circle");
+  };
+  useEffect(() => {
+    if (localStorage.getItem("user-details") !== null) {
+      let values = localStorage.getItem("user-details");
+      let newVal = JSON.parse(values);
+      setProfile(newVal.user);
+    }
+    const uid = `${profile.uid}`;
+    console.log(wymData);
+    (async () => {
+      const data2 = await Getdata(uid);
+      if (data2) {
+        setFace(data2);
+      }
+      console.log(data2);
+      setLoading(false);
+    })();
+    console.log(face);
+  }, [wymData]);
+  return switcher === "table" && wymData && face ? (
     <>
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>
-          <h1>Write Your Mood Statistics</h1>
+          <h1>WriteYourMood Statistics</h1>
           <Table stickyHeader aria-label="sticky table">
-            {/* <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead> */}
             <TableHead>
               <TableRow>
                 <TableCell align="center">Name</TableCell>
@@ -228,20 +230,16 @@ export default function StickyHeadTable() {
               {face &&
                 face
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <TableRow key={row.id}>
-                      {/* <TableCell component="th" scope="row">
-                        {row.SrNo}
-                      </TableCell> */}
+                  .map((des) => (
+                    <TableRow key={des.id}>
                       <TableCell align="center">
                         {profile.displayName}
                       </TableCell>
-
-                      <TableCell align="center">{row.key}</TableCell>
+                      <TableCell align="center">{des.key}</TableCell>
 
                       <TableCell align="center">
                         <Moment format="DD MMMM YYYY" withTitle>
-                          {row.date}
+                          {des.date}
                         </Moment>{" "}
                       </TableCell>
                       <TableCell align="center">
@@ -249,9 +247,9 @@ export default function StickyHeadTable() {
                           variant="contained"
                           color="primary"
                           component="span"
-                          onClick={() => handleClick(row.values)}
+                          onClick={() => handleClick2(des.values)}
                         >
-                          Reports
+                          Report
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -270,7 +268,7 @@ export default function StickyHeadTable() {
         />
       </Paper>
     </>
-  ) : (
+  ) : switcher === "bar" ? (
     <>
       <Graphs
         setSwitcher={setSwitcher}
@@ -278,5 +276,11 @@ export default function StickyHeadTable() {
         values={value1}
       />
     </>
+  ) : switcher === "circle" ? (
+    <>
+      <Graph2 setSwitcher={setSwitcher} />
+    </>
+  ) : (
+    <h1>Loading</h1>
   );
 }

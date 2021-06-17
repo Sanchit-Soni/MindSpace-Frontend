@@ -10,8 +10,8 @@ const BarChart = ({ sentiments, values }) => {
           datasets: [
             {
               label: "Mood",
-              // data: [0.5, 0.3, 0.13, 0.94, 0.5, 0.6],
-              data: [values[0], 10, 123, 32],
+              data: [0.5, 0.3, 0.13, 0.94, 0.5, 0.6],
+              // data: [values[0], 10, 123, 32],
 
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
