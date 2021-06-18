@@ -406,7 +406,7 @@ export default function StickyHeadTable() {
       <Graphs setSwitcher={setSwitcher} values={value2} />
     </>
   ) : switcher === "cogni" ? (
-    <Graph3 setSwitcher={setSwitcher} />
+    <Graph3 setSwitcher={setSwitcher} values={value3} />
   ) : (
     <Loading />
   );

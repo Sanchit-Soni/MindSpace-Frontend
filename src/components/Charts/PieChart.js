@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
-const PieChart = () => {
+const PieChart = ({ values }) => {
+  const [val, setVal] = useState();
+  const [category, setCategory] = useState();
+  // const [moods, setMoods] = useState();
+  useEffect(() => {
+    const change = () => {
+      let new_lables = [];
+      values.catgegory.map((obj) => {
+        let info = obj;
+        new_lables.push(info);
+        console.log(new_lables);
+      });
+      setCategory(new_lables);
+      let new_datas = [];
+      values.value.map((obj) => {
+        let info = obj;
+        new_datas.push(info);
+      });
+      setVal(new_datas);
+    };
+    change();
+  }, []);
+
   return (
     <div>
       <Pie
         data={{
-          labels: ["Neutral", "Happy", "Sad", "Angry", "TBD", "TBD"],
+          labels: category,
           datasets: [
             {
               label: "Mood",
-              data: [12, 19, 3, 4, 5, 6],
+              data: val,
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",

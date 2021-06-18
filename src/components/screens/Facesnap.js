@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import Post, { Getdata } from "../../Firebase/api";
+import Swal from "sweetalert2";
+
 const Facesnap = () => {
   const [image, setImage] = useState([]);
   const [sentImage, setSentImage] = useState({});
@@ -8,6 +10,7 @@ const Facesnap = () => {
   const [switcher, setSwitcher] = useState(true);
   const [show, setShow] = useState(true);
   const [showUpload, setShowUpload] = useState(true);
+
   const [profile, setProfile] = useState({});
 
   useEffect(() => {
@@ -64,6 +67,11 @@ const Facesnap = () => {
       console.log(sentImage);
     });
     setShowUpload(false);
+    Swal.fire({
+      title: "Wow!",
+      text: "Response Submitted",
+      icon: "success",
+    });
     console.log(image);
   };
   const handleReset = (e) => {

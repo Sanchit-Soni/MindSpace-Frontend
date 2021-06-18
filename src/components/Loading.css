@@ -1,13 +1,19 @@
-body {
+/* body {
   min-height: 100vh;
   font-family: Roboto, Arial;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(249, 251, 255, 0.6);
+} */
+.containers {
+  min-height: 80vh;
+  font-family: Roboto, Arial;
   display: flex;
   justify-content: center;
   align-items: center;
   background: rgba(249, 251, 255, 0.6);
 }
-
 .boxes {
   height: 32px;
   width: 32px;

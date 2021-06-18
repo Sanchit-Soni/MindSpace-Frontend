@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Moment from "react-moment";
+import { Button } from "@material-ui/core";
 import { Postdata } from "../../Firebase/writemood";
+import Swal from "sweetalert2";
 import "../home.css";
 
 const Writeyourmood = () => {
   const [text, setText] = useState();
+  const [status, setStatus] = useState(false);
   const [profile, setProfile] = useState({});
   var [date, setDate] = useState(new Date());
 
@@ -32,6 +35,13 @@ const Writeyourmood = () => {
     let date = new Date();
     Postdata(`${profile.uid}`, sentiments, values, date.toISOString());
     console.log(text);
+    setStatus(true);
+
+    Swal.fire({
+      title: "Wow!",
+      text: "Response Submitted",
+      icon: "success",
+    });
   };
   return (
     <div className="container">
@@ -56,9 +66,15 @@ const Writeyourmood = () => {
               cols="13"
             ></textarea>
           </div>
-          <button onClick={handleSubmit} className="form-btn">
+          <br></br>
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            color="primary"
+            disabled={status}
+          >
             Submit
-          </button>
+          </Button>
         </center>
       </form>
     </div>
