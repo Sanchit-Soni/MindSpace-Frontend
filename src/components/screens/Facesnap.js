@@ -61,6 +61,14 @@ const Facesnap = () => {
         sad: 0.11,
         surprise: 0.09,
         neutral: 0.54,
+
+        // angry: 0.03,
+        // disgust: 0.1,
+        // fear: 0.18,
+        // happy: 0.63,
+        // sad: 0.11,
+        // surprise: 0.09,
+        // neutral: 0.14,
       };
       Post(`${profile.uid}`, mood, newDate);
       //Getdata('id','lucky'); //pass your data in place of lucky and key in place of id
