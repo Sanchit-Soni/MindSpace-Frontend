@@ -80,6 +80,17 @@
   border-radius: 30px;
 }
 
+.graph-card {
+  padding: 20px;
+  border-radius: 40px !important;
+}
+
+.table-header {
+  background-color: #3f51b5;
+  padding: 20px;
+  color: white;
+}
+
 @media screen and (max-width: 580px) {
   .card-container {
     margin-top: 20px;

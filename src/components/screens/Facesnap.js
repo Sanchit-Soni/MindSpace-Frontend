@@ -52,8 +52,12 @@ const Facesnap = () => {
       console.log(localStorage.getItem("user-details"));
       let mood = {
         angry: 0.03,
-        fear: 0.12,
-        happy: 50.25,
+        disgust: 0.1,
+        fear: 0.18,
+        happy: 0.13,
+        sad: 0.11,
+        surprise: 0.09,
+        neutral: 0.54,
       };
       Post(`${profile.uid}`, mood, newDate);
       //Getdata('id','lucky'); //pass your data in place of lucky and key in place of id

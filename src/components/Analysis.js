@@ -7,6 +7,7 @@ import BarChart from "./Charts/BarChart";
 import Circular from "./Charts/Circular";
 import LineChart from "./Charts/LineChart";
 import PieChart from "./Charts/PieChart";
+import Loading from "./Loading";
 const Analysis = () => {
   const [wymData, setWymData] = useState();
   const [loading, setLoading] = useState(true);
@@ -69,10 +70,9 @@ const Analysis = () => {
   }, [wymData, face]);
 
   return loading === true ? (
-    <h1>Loading</h1>
+    <Loading />
   ) : (
     <div className="container">
-      <h1>Analytics</h1>
       <div>
         <Table />
       </div>

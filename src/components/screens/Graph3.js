@@ -1,17 +1,15 @@
 import React from "react";
-import Circular from "../Charts/Circular";
-import BarChart from "../Charts/BarChart";
-import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
-const Graphs = ({ setSwitcher, values }) => {
+import PieChart from "../Charts/PieChart";
+import Card from "@material-ui/core/Card";
+const Graph3 = ({ setSwitcher }) => {
   const handleChange = () => {
     setSwitcher("table");
   };
-
   return (
     <div>
       <center>
-        <h1>FaceSnap Analysis</h1>
+        <h1>Cognitive Analysis</h1>
         <Button variant="contained" color="primary" onClick={handleChange}>
           Go Back
         </Button>
@@ -19,14 +17,12 @@ const Graphs = ({ setSwitcher, values }) => {
       <br></br>
       <br></br>
       <Card className="graph-card">
-        <BarChart values={values} />
+        <PieChart />
       </Card>
       <br></br>
-      <br></br>
-      {/* <Circular /> */}
       <br></br>
     </div>
   );
 };
 
-export default Graphs;
+export default Graph3;

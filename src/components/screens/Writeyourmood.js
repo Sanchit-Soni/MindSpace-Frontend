@@ -27,8 +27,8 @@ const Writeyourmood = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    let sentiments = ["angry", "emotional"];
-    let values = [90, 40];
+    let sentiments = ["angry", "emotional", "stressed"];
+    let values = [60, 30, 10];
     let date = new Date();
     Postdata(`${profile.uid}`, sentiments, values, date.toISOString());
     console.log(text);

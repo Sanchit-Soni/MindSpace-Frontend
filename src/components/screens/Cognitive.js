@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputField from "./InputComponents/InputField";
 import { Button } from "@material-ui/core";
-import Postdata, { Getdata } from "../../Firebase/cognigitiveapi";
-import { GetDataById } from "../../Firebase/writemood";
+import Postdata, { GetCognidata } from "../../Firebase/cognigitiveapi";
 
 const Cognitive = () => {
   const initialValues = {
@@ -14,6 +13,14 @@ const Cognitive = () => {
   };
 
   const [values, setValues] = useState(initialValues);
+  const [profile, setProfile] = useState({});
+  useEffect(() => {
+    if (localStorage.getItem("user-details") !== null) {
+      let values = localStorage.getItem("user-details");
+      let newVal = JSON.parse(values);
+      setProfile(newVal.user);
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,8 +31,21 @@ const Cognitive = () => {
     console.log(values);
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let sentence = ["hello", "hi", "Bye", "new", "sad"];
+    let date = new Date();
+    let category = ["section1", "section2", "section3"];
+    let sentiment = "positive";
+    let values = [60, 30, 10];
+    Postdata(
+      `${profile.uid}`,
+      category,
+      sentiment,
+      values,
+      date.toISOString(),
+      sentence
+    );
 
     console.log(values);
   };

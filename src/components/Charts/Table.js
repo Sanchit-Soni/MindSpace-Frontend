@@ -14,6 +14,9 @@ import Graph2 from "../screens/Graph2";
 import Moment from "react-moment";
 import { GetDataById } from "../../Firebase/writemood";
 import { Getdata } from "../../Firebase/api";
+import { GetCognidata } from "../../Firebase/cognigitiveapi";
+import Graph3 from "../screens/Graph3";
+import Loading from "../Loading";
 
 function createData(SrNo, id, Name, Entry, Date) {
   const density = id / SrNo;
@@ -61,11 +64,13 @@ export default function StickyHeadTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(3);
   const [wymData, setWymData] = useState();
   const [face, setFace] = useState();
+  const [cogni, setCogni] = useState();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({});
   const [row1, setRow1] = useState();
   const [value1, setValue1] = useState([]);
   const [value2, setValue2] = useState([]);
+  const [value3, setValue3] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("user-details") !== null) {
@@ -103,6 +108,11 @@ export default function StickyHeadTable() {
     setSwitcher("circle");
     setValue2(value2);
   };
+  const handleClick3 = (value3) => {
+    setSwitcher("cogni");
+    setValue3(value3);
+  };
+
   useEffect(() => {
     if (localStorage.getItem("user-details") !== null) {
       let values = localStorage.getItem("user-details");
@@ -121,15 +131,52 @@ export default function StickyHeadTable() {
     })();
     console.log(face);
     console.log(switcher);
+
+    // (async () => {
+    //   const data3 = await GetCognidata(uid);
+    //   if (data3) {
+    //     setCogni(data3);
+    //   }
+    //   console.log(data3);
+    //   setLoading(false);
+    // })();
+    // console.log(cogni);
   }, [wymData, switcher]);
+  useEffect(() => {
+    if (localStorage.getItem("user-details") !== null) {
+      let values = localStorage.getItem("user-details");
+      let newVal = JSON.parse(values);
+      setProfile(newVal.user);
+    }
+    const uid = `${profile.uid}`;
+
+    (async () => {
+      const data3 = await GetCognidata(uid);
+      console.log(data3);
+      console.log(face);
+      if (data3) {
+        setCogni(data3);
+      }
+      setLoading(false);
+    })();
+    console.log(cogni);
+    console.log(switcher);
+  }, [face, switcher]);
+
+  useEffect(() => {
+    console.log(cogni);
+    console.log(switcher);
+  }, [cogni, switcher]);
 
   return loading === true ? (
-    <h1>Loading</h1>
+    <Loading />
   ) : switcher === "table" ? (
     <>
       <Paper className={classes.root}>
+        <center>
+          <h2 className="table-header">WriteYourMood Statistics</h2>
+        </center>
         <TableContainer className={classes.container}>
-          <h1>WriteYourMood Statistics</h1>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -144,8 +191,8 @@ export default function StickyHeadTable() {
                 wymData
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map(
-                    (row) => (
-                      <TableRow key={row.id}>
+                    (row, index) => (
+                      <TableRow key={index}>
                         {/* <TableCell component="th" scope="row">
                         {row.SrNo}
                       </TableCell> */}
@@ -165,9 +212,9 @@ export default function StickyHeadTable() {
                             variant="contained"
                             color="primary"
                             component="span"
-                            onClick={() => handleClick(row.values)}
+                            onClick={() => handleClick(row)}
                           >
-                            Reports
+                            Report
                           </Button>
                         </TableCell>
 
@@ -207,8 +254,10 @@ export default function StickyHeadTable() {
       </Paper>
 
       <Paper className={classes.root}>
+        <center>
+          <h2 className="table-header">FaceSnap Statistics</h2>
+        </center>
         <TableContainer className={classes.container}>
-          <h1>FaceSnap Statistics</h1>
           <Table stickyHeader aria-label="sticky table">
             {/* <TableHead>
             <TableRow>
@@ -235,8 +284,8 @@ export default function StickyHeadTable() {
               {face &&
                 face
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((des) => (
-                    <TableRow key={des.id}>
+                  .map((des, index) => (
+                    <TableRow key={index}>
                       <TableCell align="center">
                         {profile.displayName}
                       </TableCell>
@@ -252,7 +301,7 @@ export default function StickyHeadTable() {
                           variant="contained"
                           color="primary"
                           component="span"
-                          onClick={() => handleClick2(des.values)}
+                          onClick={() => handleClick2(des)}
                         >
                           Report
                         </Button>
@@ -272,20 +321,93 @@ export default function StickyHeadTable() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <Paper className={classes.root}>
+        <center>
+          <h2 className="table-header">Cognitive Corrections Statistics</h2>
+        </center>
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            {/* <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead> */}
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Report ID</TableCell>
+                <TableCell align="center">Date&nbsp;</TableCell>
+                <TableCell align="center">Report&nbsp;</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cogni &&
+                cogni
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((res, index) => (
+                    <TableRow key={index}>
+                      <TableCell align="center">
+                        {profile.displayName}
+                      </TableCell>
+                      <TableCell align="center">{res.key}</TableCell>
+
+                      <TableCell align="center">
+                        <Moment format="DD MMMM YYYY" withTitle>
+                          {res.date}
+                        </Moment>{" "}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          component="span"
+                          onClick={() => handleClick3(res)}
+                        >
+                          Report
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[3, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+      <br></br>
+      <br></br>
     </>
   ) : switcher === "bar" ? (
     <>
-      <Graphs
+      <Graph2
         setSwitcher={setSwitcher}
-        sentiments={wymData.sentiments}
+        // sentiments={wymData.sentiments}
         values={value1}
       />
     </>
   ) : switcher === "circle" ? (
     <>
-      <Graph2 setSwitcher={setSwitcher} />
+      <Graphs setSwitcher={setSwitcher} values={value2} />
     </>
+  ) : switcher === "cogni" ? (
+    <Graph3 setSwitcher={setSwitcher} />
   ) : (
-    <h1>Loading</h1>
+    <Loading />
   );
 }
