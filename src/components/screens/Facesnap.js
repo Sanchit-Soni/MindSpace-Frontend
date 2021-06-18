@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
+import Post, { Getdata } from "../../Firebase/api";
+import Swal from "sweetalert2";
+
 const Facesnap = () => {
   const [image, setImage] = useState([]);
   const [sentImage, setSentImage] = useState({});
@@ -7,6 +10,16 @@ const Facesnap = () => {
   const [switcher, setSwitcher] = useState(true);
   const [show, setShow] = useState(true);
   const [showUpload, setShowUpload] = useState(true);
+
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    if (localStorage.getItem("user-details") !== null) {
+      let values = localStorage.getItem("user-details");
+      let newVal = JSON.parse(values);
+      setProfile(newVal.user);
+    }
+  }, []);
 
   const showImage = (file) => {
     const reader = new FileReader();
@@ -31,6 +44,7 @@ const Facesnap = () => {
   };
 
   const handlePost = (e) => {
+    const newDate = new Date();
     e.preventDefault();
     let idCardBase64 = "";
     getBase64(image, (result) => {
@@ -38,9 +52,34 @@ const Facesnap = () => {
       console.log(idCardBase64);
       setImage(idCardBase64);
       setSentImage(idCardBase64);
+      console.log(localStorage.getItem("user-details"));
+      let mood = {
+        angry: 0.03,
+        disgust: 0.1,
+        fear: 0.18,
+        happy: 0.13,
+        sad: 0.11,
+        surprise: 0.09,
+        neutral: 0.54,
+
+        // angry: 0.03,
+        // disgust: 0.1,
+        // fear: 0.18,
+        // happy: 0.63,
+        // sad: 0.11,
+        // surprise: 0.09,
+        // neutral: 0.14,
+      };
+      Post(`${profile.uid}`, mood, newDate);
+      //Getdata('id','lucky'); //pass your data in place of lucky and key in place of id
       console.log(sentImage);
     });
     setShowUpload(false);
+    Swal.fire({
+      title: "Wow!",
+      text: "Response Submitted",
+      icon: "success",
+    });
     console.log(image);
   };
   const handleReset = (e) => {

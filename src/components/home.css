@@ -60,7 +60,7 @@
 }
 .user-image {
   border-radius: 50%;
-  height: 250px;
+  height: 200px;
 }
 
 .input-bars {
@@ -72,6 +72,23 @@
   width: 450px;
   padding: 10px;
   border-radius: 10px;
+}
+
+.cog-image {
+  height: 250px;
+  width: 250px;
+  border-radius: 30px;
+}
+
+.graph-card {
+  padding: 20px;
+  border-radius: 40px !important;
+}
+
+.table-header {
+  background-color: #3f51b5;
+  padding: 20px;
+  color: white;
 }
 
 @media screen and (max-width: 580px) {
@@ -98,5 +115,9 @@
     width: 250px;
     padding: 10px;
     border-radius: 10px;
+  }
+  .user-image {
+    border-radius: 50%;
+    height: 100px;
   }
 }

@@ -16,7 +16,7 @@ const Profile = ({ history }) => {
       setProfile(newVal.user);
       console.log(profile);
     }
-  }, [profile]);
+  }, []);
 
   const handleLogout = () => {
     auth.signOut();
